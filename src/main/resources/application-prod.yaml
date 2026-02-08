@@ -1,0 +1,46 @@
+# ===================================================================
+# Prod profile — hardened settings for production
+# Run with: --spring.profiles.active=prod
+# ===================================================================
+
+spring:
+  security:
+    user:
+      name: ${CONFIG_SERVER_USER}
+      password: ${CONFIG_SERVER_PASSWORD}
+  cloud:
+    config:
+      server:
+        git:
+          uri: ${CONFIG_REPO_URI:https://github.com/vidhangithub/vid-cloud-config-repo}
+          default-label: main
+          clone-on-start: true
+          force-pull: true
+          timeout: 5
+          # Uncomment for private repo with personal access token:
+          # username: ${GIT_USERNAME}
+          # password: ${GIT_TOKEN}
+    bus:
+      enabled: true  # Requires RabbitMQ — set SPRING_RABBITMQ_HOST, etc.
+
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+
+management:
+  endpoint:
+    health:
+      show-details: when-authorized
+
+# Structured JSON logging for log aggregation (ELK, Splunk, etc.)
+logging:
+  structured:
+    format:
+      console: ecs
+  level:
+    root: WARN
+    com.vidhan.cloudconfig: INFO
+    org.springframework.cloud.config: INFO
+    org.springframework.security: WARN

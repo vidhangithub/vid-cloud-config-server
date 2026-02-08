@@ -1,5 +1,6 @@
 server:
   port: 8888
+  shutdown: graceful
 
 spring:
   application:
@@ -11,3 +12,22 @@ spring:
           uri: https://github.com/vidhangithub/vid-cloud-config-repo
           default-label: main
           clone-on-start: true
+    bus:
+      enabled: false  # Enable per-profile when RabbitMQ is available
+
+  # Encryption key for {cipher} values in config repo
+  # Override via environment variable: ENCRYPT_KEY
+  encrypt:
+    key: ${ENCRYPT_KEY:change-me-in-production}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, prometheus, env, refresh, busrefresh
+  endpoint:
+    health:
+      show-details: always
+  health:
+    config:
+      enabled: true

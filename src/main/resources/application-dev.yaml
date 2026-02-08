@@ -1,0 +1,23 @@
+# ===================================================================
+# Dev profile — relaxed settings for local development
+# Run with: --spring.profiles.active=dev
+# ===================================================================
+
+spring:
+  security:
+    user:
+      name: dev
+      password: dev
+  cloud:
+    config:
+      server:
+        git:
+          timeout: 10
+    bus:
+      enabled: false
+
+logging:
+  level:
+    root: INFO
+    com.vidhan.cloudconfig: DEBUG
+    org.springframework.cloud.config: DEBUG
