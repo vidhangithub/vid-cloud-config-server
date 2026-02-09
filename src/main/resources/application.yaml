@@ -15,10 +15,11 @@ spring:
     bus:
       enabled: false  # Enable per-profile when RabbitMQ is available
 
-  # Encryption key for {cipher} values in config repo
-  # Override via environment variable: ENCRYPT_KEY
-  encrypt:
-    key: ${ENCRYPT_KEY:change-me-in-production}
+
+# Encryption key for {cipher} values in config repo
+# Override via environment variable: ENCRYPT_KEY
+encrypt:
+  key: ${ENCRYPT_KEY:change-me-in-production}
 
 management:
   endpoints:
